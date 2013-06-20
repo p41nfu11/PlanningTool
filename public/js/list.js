@@ -27,12 +27,38 @@ function ListViewModel() {
                 if (!e.completed)
                     e.completed = false;
 
-                self.tasks.push(e); 
+                self.addTaskToList(e);
             });
         });        
     };
 
     self.init();
+
+    self.removeTaskFromList = function(task, fromCompletedList)
+    {
+        if (fromCompletedList)
+        {
+            var index = self.completedTasks.indexOf(task);
+            self.completedTasks.splice(index, 1);
+        }
+        else
+        {
+            var index = self.tasks.indexOf(task);
+            self.tasks.splice(index, 1);
+        }
+    }
+
+    self.addTaskToList = function(task)
+    {
+        if (task.completed) 
+        {
+            self.completedTasks.push(task);
+        }
+        else
+        {
+            self.tasks.push(task);   
+        }
+    }
 
     self.addTaskWasClicked = function(){
         var today = new Date();
@@ -40,7 +66,8 @@ function ListViewModel() {
         
         var newTask = {title: self.title, createdDate: new Date(), completed: false, dueDate: tomorrow};
         $.post('/api/task', {task:newTask, listId: parameter.id}, function(data) {
-            self.tasks.push(data);
+            
+            self.addTaskToList(data);
             self.title('');
         }); 
     };

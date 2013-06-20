@@ -118,7 +118,7 @@ app.post('/api/updateTask/', ensureAuthenticated, api.updateTask);
 
 app.get('/api/tasks/:id', api.tasksByList);
 
-
+app.post('/api/removeList/', ensureAuthenticated, api.removeList);
 
 app.get('/fbauth', passport.authenticate('facebook', {scope:'email'}));
 

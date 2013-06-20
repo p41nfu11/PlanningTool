@@ -4,6 +4,7 @@ function ListsViewModel() {
     self.lists = ko.observableArray();
     self.title = ko.observable();
     self.listToJoin = ko.observable();
+    self.edit = ko.observable(false);
 
     self.init = function(){
     	$.get('/api/lists/', function(data) {
@@ -23,10 +24,17 @@ function ListsViewModel() {
 
     self.joinList = function(){
         $.post('/api/listAddOwner/', {listId: self.listToJoin()}, function(res, err) {
-
             self.listToJoin('');
         });
+    }
+
+    self.removeList = function(rList){
+        $.post('/api/removeList/', rList, function(removedList, err) {
+            
+                var index = self.lists.indexOf(removedList);
+                self.lists.splice(index, 1);
         
+        });
     }
 
     self.init();
