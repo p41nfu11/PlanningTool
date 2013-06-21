@@ -195,18 +195,18 @@ exports.removeList = function(request, response){
 // 	});
 // }
 
-// exports.delTask = function (request, response) {
-// 	task.find({ _id:request.body._id },function(err,docs){
-// 	    if(err)
-// 	    {
-// 	    	response.send(404);
-// 	    }
-// 	    else{
-// 	    	console.log('found one. Deleting...');
-// 	    	docs.forEach(function(doc){
-// 	    		doc.remove();
-// 	    	});
-// 	    	response.send(200);
-// 	    }
-// 	});	
-// };
+exports.removeTask = function (request, response) {
+	task.find({ _id:request.body._id },function(err,docs){
+	    if(err)
+	    {
+	    	response.send(404);
+	    }
+	    else{
+	    	console.log('found one. Deleting...');
+	    	docs.forEach(function(doc){
+	    		doc.remove();
+	    	});
+	    	response.send(200);
+	    }
+	});	
+};

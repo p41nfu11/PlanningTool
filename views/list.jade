@@ -13,7 +13,7 @@ block content
 				button(class='btn btn-mini',type='button', data-bind='click:$parent.snoozeTaskWasClicked, visible:$parent.isDue($data)')
 					i(class="icon-time")
 				&nbsp;
-				button(class='btn btn-mini',type='button', data-bind='click:$parent.delTask, visible:$parent.edit')
+				button(class='btn btn-mini',type='button', data-bind='click:$parent.removeTask, visible:$parent.edit')
 					i(class="icon-remove")
 
 				
@@ -24,7 +24,7 @@ block content
 			td
 				span(data-bind="text: title")
 			td
-				button(class='btn btn-mini',type='button', data-bind='visible:$parent.edit')
+				button(class='btn btn-mini',type='button', data-bind='click:$parent.removeTask, visible:$parent.edit')
 					i(class="icon-remove")
 
 	h1= title

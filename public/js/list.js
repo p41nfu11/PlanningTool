@@ -96,6 +96,13 @@ function ListViewModel() {
         $.post('/api/updateTask', task, function(updatedTask) {
         });
     }
+
+    self.removeTask = function(task)
+    {
+        $.post('/api/removeTask/', task, function() {
+            self.removeTaskFromList(task);
+        });
+    }
 };
 
 ko.applyBindings(new ListViewModel());

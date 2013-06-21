@@ -106,7 +106,7 @@ app.get('/api/lists/', api.lists);
 
 // app.post('/api/updateList/', ensureAuthentication, api.updateList);
 
-// app.post('/api/removeList/', ensureAuthentication, api.removeList);
+ app.post('/api/removeTask/', ensureAuthenticated, api.removeTask);
 
 // app.post('/api/addTaskToList/', ensureAuthentication, api.addTaskToList);
 
