@@ -31,7 +31,7 @@ function ListsViewModel() {
     self.removeList = function(rList){
         $.post('/api/removeList/', rList, function(removedList, err) {
             
-                var index = self.lists.indexOf(removedList);
+                var index = self.lists.indexOf(rList);
                 self.lists.splice(index, 1);
         
         });

@@ -44,8 +44,7 @@ block content
 
 		
 		br	
-		div(class='span6')
-
+		div(class='span6', data-bind='visible: completedTasks().length > 0')
 			h4 Completed
 			br
 			table(class='table table-striped')
@@ -56,10 +55,7 @@ block content
 		div(class='span6')		
 			div(class="span3")
 				input(type='checkbox',data-bind='checked:edit') Deletable
-			br
-			div(class="span3")
-				form(METHOD="LINK", ACTION="/logout")
-					input(type="submit", value="Logout", class='btn btn-large')
+			
 
 			br
 			br
