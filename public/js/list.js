@@ -10,6 +10,9 @@ function ListViewModel() {
     self.edit = ko.observable(false);
     self.title = ko.observable('');
 
+    //edit
+    self.editTaskTitle = ko.observable('');
+
 
     self.init = function(){
 
@@ -24,6 +27,7 @@ function ListViewModel() {
 
         $.get('/api/tasks/' + parameter.id, function(data) {
             data.forEach(function (e){
+                e.editActive = ko.observable(false);
                 if (!e.completed)
                     e.completed = false;
 
@@ -72,6 +76,20 @@ function ListViewModel() {
         }); 
     };
 
+    self.snoozeTaskWasClicked = function(task)
+    {   
+
+        var today = new Date();
+        var threeDays = new Date(Date.parse(new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)));
+
+        task.dueDate = threeDays;
+
+        $.post('/api/updateTask/', task, function(updatedTask) {
+            self.removeTaskFromList(task);
+            self.addTaskToList(task);
+        });
+    }
+
     self.checkboxClicked = function(data){
         $.post('/api/updateTask/', data, function(updatedTask) {
             self.removeTaskFromList(data, !data.completed);
@@ -81,6 +99,29 @@ function ListViewModel() {
         return true;
     };
 
+    self.editButtonWasClicked = function(task){
+        if (!task.editActive()){
+            task.editActive(true);
+            self.editTaskTitle(task.title);
+        }
+        else{
+            self.editActive(false);
+            self.editTaskTitle('');
+        }
+    };
+
+    self.editTask = function(task){
+        //task.title = self.editTaskTitle();
+
+        $.post('/api/updateTask/', task, function() {
+            //self.removeTaskFromList(task);
+            //self.addTaskToList(task);
+        }); 
+
+        //self.editTaskTitle('');
+        task.editActive(false);
+    }
+
     self.isDue = function(task)
     {
         if (new Date() > new Date(task.dueDate))
@@ -89,13 +130,6 @@ function ListViewModel() {
             return false;
     }
 
-    //due is Date()
-    self.updateDueDate = function(task, newDue)
-    {
-        task.dueDate = newDue;
-        $.post('/api/updateTask', task, function(updatedTask) {
-        });
-    }
 
     self.removeTask = function(task)
     {
