@@ -6,13 +6,24 @@ block content
 			td
 				input(type='checkbox',data-bind='checked:completed,click:$parent.checkboxClicked')
 			td
+				<!-- ko ifnot: editActive -->
 				span(class="badge badge-important", data-bind="if: $parent.isDue($data)") due
 				&nbsp;
 				span(data-bind="text: title")
+				<!-- /ko -->
+				<!-- ko if: editActive -->
+				form(class='form')
+					input(ID='title', data-bind='value: title',placeholder="edit title", class='input-medium')
+					button(data-bind='click:function(){$parent.editTask($data)}', class='btn') Edit
+				<!-- /ko -->
+
 			td
 				button(class='btn btn-mini',type='button', data-bind='click:$parent.snoozeTaskWasClicked, visible:$parent.isDue($data)')
 					i(class="icon-time")
-				&nbsp;
+			td	
+				button(class='btn btn-mini',type='button', data-bind='click: $parent.editButtonWasClicked')
+					i(class="icon-pencil")
+			td
 				button(class='btn btn-mini',type='button', data-bind='click:$parent.removeTask, visible:$parent.edit')
 					i(class="icon-remove")
 

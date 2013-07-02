@@ -138,6 +138,8 @@ exports.updateTask = function(request, response){
 	    	
 	    	doc.completed = data.completed;
 	    	doc.dueDate = data.dueDate;
+	    	doc.title = data.title;
+	    	doc.text = data.text;
 
 	    	doc.save(function(err){
 				if(err){
